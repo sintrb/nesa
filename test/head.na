@@ -1,0 +1,43 @@
+//Mapper0 24K开始文件布局
+//代码段声明形式:.sigmentdefine name = 代码段名字, size = 代码段字节数, start = 代码映射到FC中的的开始位置(其实NES头和CHR无需编译，所以它们的start可以随便写或者不写), fill = 默认填充值
+.segmentdefine name = HEAD, size = 16, start = 0, fill = 0;				//Nes头, 16Byte
+.segmentdefine name = ROM, size = #$3ffa, start = #$8000, fill = 0;    //代码部分,主程序段,16K-6byte
+
+.segmentdefine name = VECTOR, size = #$6, start = #$fffa, fill = 0;		//中断向量, 6Byte
+.segmentdefine name = VROM, size = #$2000, start = #$0, fill = 0; 		//字模,8K
+//文件布局结束
+
+/*
+文件布局补充:
+	1.代码的数据最终存入文件的顺序和声明代码段的顺序一致
+	2.你可以先声明一部分代码段，需要的时候再申明另一个代码段，但是必须确保最终存入文件的顺序和NES规定的文件格式一直
+	3.我的建议是先申明代码段再使用
+	4.ROM和VECTOR布局可以合并在一块，那么将是一个8K的块，在设置中断向量的时候可以如下：
+		.org $bffa	//设置位置为$bffa(三个中断的起始位置)
+		.word nmi start start	//写入口
+	5.当然任何长度大于1byte的代码段你也可以把它分开申明成几个部分，只有确保代码段的总长度和写入文件的位置符合NES文件格式就行
+*/
+
+//下面设置警告和错误级别，可以不设置的，默认值就分别为1 0
+.warning 1	//设置警告级别,0:提示警告并中断编译 1(默认):提示警告但是继续编译 2:不提示警告
+.error 0	//设置错误级别,0(默认):提示错误并中断编译 1:提示错误但是继续编译 2:不提示错误
+
+//下面设置NES文件头
+.segment HEAD	//选择代码段为NES头,设置NES头属性
+.byte #$4e, #$45, #$53, #$1A;	//"NES^Z"
+.byte #$01;	//
+.byte #$01; //
+
+
+//下面设置字模
+.segment VROM	//选择代码段为字模
+.includebin ascii.chr	//包含二进制字模数据ascii.chr
+
+//设置中断向量
+//中断向量也可以在文件的最末尾了设置，在次处设置的目的只是预留一个任务在编译完成之后编译器自动写对应的标签
+//以下划线'_'开头的标签说明是全局标签
+.segment VECTOR	//设置代码段为中断向量的代码段
+.word _nmi _reset _irq	//写入双字节(地址)中断入口nmi,reset,irq，在包含了该文件之后需要给出nmi,reset,irq入口，使用了三个超越标签，需要之后来指明
+
+//选择主程序段,这样包含了该文件之后就可以直接写代码了，而不用去设置了
+.segment ROM	//选择代码段为主程序段

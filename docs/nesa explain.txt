@@ -1,0 +1,415 @@
+nesa v1.1ËµÃ÷(»ã±àµÄÍêÉÆ)
+	1.ËùÓÐµÄÎ±Ö¸Áî¶¼¿ÉÒÔÊ¹ÓÃÔ­È«³ÆµÄÇ°Èý¸ö×ÖÄ¸´úÌæ,Ô­À´ÊÇ¸´ºÏµ¥´ÊµÄ·Ö±ðÈ¥¹¹³Éµ¥´ÊµÄÇ°Èý¸ö½øÐÐ¸´ºÏ
+		Èç:	.byte = .byt
+			.word = .wor
+			.error = .err
+			.data = .dat
+			.segmentdefine = .segdef
+			
+	2.Ìí¼ÓÖÐ¶ÏÖ¸Áî:int $xxxx
+		1)Ìí¼Ó¸ÃÖ¸ÁîÊÇÎªÁË½â¾öÄ³Ð©Çé¿öÏÂÖÐ¶ÏµÄÌØÊâÊ¹ÓÃ,¾ÍÈçÎÄÇúÐÇÉÏµÄÄÇÖÖÖÐ¶ÏÏòÁ¿Ò»Ñù
+		2)¸ÃÖ¸ÁîµÄ»úÆ÷ÂëºÍbrkµÄÒ»Ñù,Ö»ÊÇËüµÄºóÃæÓÐÒ»¸ö16Î»µÄµØÖ·,ÓÃÕâ¸öÄã¿ÉÒÔ×ö×Ô¼ºµÄÖÐ¶Ï±í
+		3)ÄãÊ¹ÈËbrkÊ±²»ÄÜÌí¼ÓµØÖ·,ÐèÒªÌí¼ÓµØÖ·Ê±ÓÃintÖ¸Áî.
+		4)ÈçÄã¿ÉÒÔÊ¹ÓÃ$xxxxµÄ¸ß°ËÎ»×÷ÎªÒ³Âë,ÓÃµÚ°ËÎ»×÷ÎªÖÐ¶ÏÏòÁ¿
+		
+	3.´óÊý(³¬¹ý$ffffµÄÊý)µÄÖ§³Ö:
+		1)1.0°æ±¾ÖÐÌá¹ý²»ÄÜ¶¨Òå´óÓÚ$10000µÄ´úÂë¶Î,Õâ¸öÎÊÌâÔÚ1.1ÖÐµÃµ½ÁË½â¾ö
+		2)Ê¹ÓÃ´óÊýÊ±²»ÒªÔÚÇ°ÃæÌí¼ÓµØÖ·µ½Êý¾ÝµÄ×ª»»·û(#)ÁË,±àÒëÆ÷×Ô¶¯°Ñ´óÊýÀí½â³ÉÊý¾Ý¶ø·ÇµØÖ·,Èç¹ûÄãÊ¹ÓÃ#µÄ»°½«±»×ª»»ÎªBYTEÁË
+	4.ÄäÃû±êÇ©:
+		1)»¹¼ÇµÃÔÚ1.0°æ±¾ÖÐÄãµÃÎªÃ¿¸ö±êÇ©¶¼¶¨ÒåÒ»¸öÃû×ÖÂð,1.1°æ±¾ÖÐÕâ¸öÃû×Ö²»ÊÇ±ØÐëµÄ,ÕâÑùµÄ±êÇ©ÎÒÃÇ³ÆÖ®Îª"ÄäÃû±êÇ©"
+		2)ÄäÃû±êÇ©µÄ¶¨Òå,Ô­À´µÄ".label"Î±Ö¸ÁîºóÃæ²»½ÓÈÎºÎ²ÎÊý¾Í´ú±í¶¨ÒåÒ»¸öÄäÃû±êÇ©ÁË
+		3)ÄäÃû±êÇ©µÄÌø×ª,ÐèÒªÇ°Ò»¸öÄäÃû±êÇ©ÃûÊ±Ê¹ÓÃ×óÐ±¸Ü(/)´úÌæ±êÇ©Ãû,ÐèÒªÏÂÒ»¸öÄäÃû±êÇ©ÃûÊ±Ê¹ÓÃÓÒÐ±¸Ü(\),×óÐ±¸Ü»òÕßÓÒÐ±¸ÜºóÃæ¾ù¿ÉÒÔ¼ÓÒ»¸öÈ·¶¨Öµ²ÎÊýn,²ÎÊý´ú±íµÚÇ°n¸ö,»òÕßºóµÚn¸ö,²»½Ó²ÎÊýµÄ»°¾Í´ú±íÊÇÇ°Ãæ¸Õ¶¨ÒåµÄÄÇ¸ö,ºÍºóÃæ½«Òª¶¨ÒåµÄÄÇ¸ö,Ò²¾ÍÊÇËµ"\"ºÍ"\1"µÈ¼Û,"/"ºÍ"/1"µÈ¼Û
+		4)ÄäÃû±êÇ©²»½¨Òé´ó¼Ò½Ó²ÎÊý,ÓÃËüÀ´´¦ÀíÔÚ¶Î¾àÀëÄÚµÄÌø×ª¾Í¹»ÁË,³¤¾àÀëµÄÌø×ª¿ÉÄÜ»áÒòÎªÄãÔÚÕâÖ®¼äµÄ´úÂëÖÐÒ²ÊÇÓÃÁËÄäÃû±êÇ©¶ø´òÂÒÁËÄãµÄ±êÇ©Ê¹ÓÃË¼Â·,³¤¾àÀëµÄÌø×ª¾ÍÖ±½Ó¸ø±êÇ©ÃüÃû°É
+		5)ÄäÃû±êÇ©ÀàËÆCÀïÃæµÄswitch,ÓÃÀ´´¦Àí·ÖÖ§Ìø×ªÊ±±È½Ï·½±ã,±ÈÈçÄã¿ÉÒÔÓÃÀ´´¦Àí¼òµ¥µÄÊÖ±úÅÐ¶Ï
+		6)Ó¦ÓÃ¾ÙÀý:
+			A)µ¥´ÎÊ¹ÓÃ
+				lda $00
+				cmp #$01
+				bne \	//A.Ìø×ªµ½ÏÂÒ»¸öÄäÃû±êÇ©
+				inc $01
+				.lab	//¶¨ÒåÒ»¸öÄäÃû±êÇ©,Ò²¾ÍÊÇAÒªÌø×ªµ½µÄÎ»ÖÃ
+				cmp #$02
+				bne \	//B.Ìø×ªµ½ÏÂÒ»¸öÄäÃû±êÇ©
+				inc $04
+				.lab	//¶¨ÒåÒ»¸öÄäÃû±êÇ©,Ò²¾ÍÊÇBÒªÌø×ªµ½µÄÎ»ÖÃ
+				rts
+				
+				ÉÏÃæµÄ´úÂëµÈÐ§ÓÚ:
+				lda $00
+				cmp #$01
+				bne lb1
+				inc $01
+				.lab lb1
+				cmp #$02
+				bne lb2
+				inc $04
+				.lab lb2
+				rts
+				
+			B)¸´ÓÃ·½Ê½
+				lda $00
+				beq \	//²»ÏàµÈµÄ»°µ½ÏÂÒ»¸öÄäÃû±êÇ©A
+				dec $00
+				lda $01
+				beq \	//²»ÏàµÈµÄ»°µ½ÏÂÒ»¸öÄäÃû±êÇ©A
+				dec $01
+				lda $02
+				beq \	//²»ÏàµÈµÄ»°µ½ÏÂÒ»¸öÄäÃû±êÇ©A
+				dec $02
+				.lab	//¶¨ÒåÄäÃû±êÇ©A
+				rts
+				
+				ÉÏÃæµÄ´úÂëµÈÐ§ÓÚ:
+				lda $00
+				beq lb1
+				dec $00
+				lda $01
+				beq lb1
+				dec $01
+				lda $02
+				beq lb1
+				dec $02
+				.lab lb1
+				rts
+
+	5.Õ»Ê½±êÇ©:
+		1)Õ»Ê½±êÇ©ÊÇÌØÊâµÄÄäÃû,Ö»²»¹ýËüÊÇºó½øÏÈ³öµÄ,Õ»Ê½±êÇ©ÊÇÒ»ÖÖ¶Ô³Æ±êÇ©,ÄãÊ¹ÓÃ¼¸¸öÕ»Ê½±êÇ©¾ÍµÃ¶¨ÒåÁË¼¸¸öÕ»Ê½±êÇ©
+		2)Õ»Ê½±êÇ©µÄ¶¨Òå,Ê¹ÓÃ".label"Î±Ö¸Áî,¼Ó±êÇ©·½Ïò,±êÇ©·½ÏòÓÃ×ó»¨À¨ºÅ({)»òÕßÓÒ»¨À¨ºÅ(})Ö¸Ê¾,·Ö±ðÖ¸Ê¾Ïòºó¶ÔÆëºÍÏòÇ°¶ÔÆë.
+		3)Õ»Ê½±êÇ©µÄÌø×ª,Ê¹ÓÃ×ó»¨À¨ºÅ({)»òÕßÓÒ»¨À¨ºÅ(})Ö¸Ê¾,·Ö±ðÖ¸Ê¾ÏòºóÌø×ªºÍÏòÇ°Ìø×ª.
+		4)Õ»Ê½±êÇ©ÊÇ¿ÉÇ¶Ì×±êÇ©,¾ÍÊÇËµÄãÔÚÊ¹ÓÃÁËÕ»Ê½±êÇ©µÄ´úÂëÖ®¼ä»¹¿ÉÒÔÊ¹ÓÃÕ»Ê½±êÇ©,¶øÇÒÇ¶Ì×´ÎÊýÊÇÃ»ÓÐÈÎºÎÏÞÖÆµÄ
+		5)Õ»Ê½±êÇ©ºÍÄäÃû±êÇ©Ò»ÑùÊÇÎªÁË¼õÇá³ÌÐòÔ±µÄ±êÇ©¼ÇÒä¶øÊ¹ÓÃµÄ.
+		6)Ó¦ÓÃ¾ÙÀý:
+			A)ÏÈ¶¨ÒåÕ»±êÇ©µÄÇé¿ö
+				ldy #$ff
+				.lab {	//¶¨ÒåÒ»¸öÏòºó¶ÔÆëµÄÕ»Ê½±êÇ©A,ÏÖÔÚ±êÇ©Õ»ÀïÃæÓÐ(A)
+				ldx #$ff
+				.lab {	//¶¨ÒåÒ»¸öÏòºó¶ÔÆëµÄÕ»Ê½±êÇ©B,ÏÖÔÚ±êÇ©Õ»ÀïÃæÓÐ(AB)
+				nop //Ñ­»·Ìå
+				dex
+				bne }	//Ìø×ªµ½Ç°Ò»¸öÕ»Ê½±êÇ©B,²¢ÈÃ±êÇ©³öÕ»,ÏÖÔÚ±êÇ©Õ»ÀïÃæÓÐ(A)
+				dey
+				bne }	//Ìø×ªµ½Ç°Ò»¸öÕ»Ê½±êÇ©A,²¢ÈÃ±êÇ©³öÕ»,Õ»¿Õ
+				
+				ÉÏÃæµÄ´úÂëµÈÐ§ÓÚ:
+				ldy #$ff
+				.lab lb1
+				ldx #$ff
+				.lab lb2
+				nop //Ñ­»·Ìå
+				dex
+				bne lb2
+				dey
+				bne lb1
+
+			B)ÏÈÊ¹ÓÃÕ»±êÇ©µÄÇé¿ö
+				lda $00
+				cmp #$ff
+				beq {	//ÏÈÊ¹ÓÃ±êÇ©A
+				lda $01
+				cmp #$ff
+				beq {	//ÏÈÊ¹ÓÃ±êÇ©B
+				inc $02
+				.lab }	//¸ø³ö±êÇ©BµÄ¶¨Òå
+				inc $03
+				.lab }	//¸ø³ö±êÇ©AµÄ¶¨Òå
+				rts
+				
+				ÉÏÃæµÄ´úÂëµÈÐ§ÓÚ:
+				lda $00
+				cmp #$ff
+				beq lb1
+				lda $01
+				cmp #$ff
+				beq lb2
+				inc $02
+				.lab lb2
+				inc $03
+				.lab lb1
+				rts
+	6.°æ±¾Ð¡½á:
+		1)1.1¶Ô1.0µÄ´úÂëÊÇÍêÈ«µÄÖ§³ÖµÄ
+		2)Èç¹ûÄãÊ¹ÓÃÕ»±êÇ©Çë¼Ç×¡Ò»µã,Õ»±êÇ©µÄ¶¨ÒåºÍÊ¹ÓÃÊÇ³É¶ÔµÄ³öÏÖµÄ(Ò²¾ÍÊÇ×óÓÒ»¨À¨ºÅÊÇ³É¶ÔµÄ),¶øÄäÃû±êÇ©Ôò¿ÉÒÔ¶à´Î¸´ÓÃÍ¬Ò»¸öÄäÃû±êÇ©
+		3)¸Ã°æ±¾ÖÐµÄÄäÃû±êÇ©(Õ»Ê½±êÇ©Ò²ÊÇÄäÃû±êÇ©µÄÒ»ÖÖ)¶¼ÊÇ±àÒëÆ÷ÒÔ"__LB"¼ÓÉÏÒ»¸öËÄÎ»¿í¶È¶ÔÆëµÄÊ®Áù½øÖÆÊýÀ´´úÌæ(ÓÃ--lÑ¡Ïî¿ÉÒÔ¿´µ½)£¬µÄËùÒÔÎªÁË·ÀÖ¹±êÇ©³åÍ»£¬ÇëÊ¹ÓÃÕß²»ÒªÊ¹ÓÃ"_LB"¿ªÍ·µÄ±êÇ©Ãû
+		4)Êµ¼ÊÉÏÊ¹ÓÃÄäÃû±êÇ©Ê±ÄãÍêÈ«¿ÉÒÔ°Ñ".lab"Ê¡ÂÔÁË£¬ÔÚÓï¾äºóÃæ¼ÓÒ»¸öÃ°ºÅ(:)¾ÍÐÐ£¬µ«ÊÇ²»½¨ÒéÄÇÑùÐ´£¬ÏÖÔÚÒÑ¾­¹»·½±ãµÄÁË£¬".lab"¾ÍËÄ¸ö×ÖÄ¸¶øÒÑ£¬Ð´Ò»ÏÂÓÃ²»ÁËÄã¶àÉÙÊ±¼äµÄ
+		5)Ö®ËùÒÔ»¹ÑØÓÃ1.xÊÇÒòÎªÕâ¸ö°æ±¾Ëù¸øµÄ¹¦ÄÜ¶¼ÊÇ»ã±àÓ¦¸ÃÓÐµÄ,»òÕßÊôÓÚ»ã±àµÄ¼òµ¥À©Õ¹
+		6)Î¬¾©ÁÔÈËÔøÌáµ½nesa¼ÓÈëÌ«¶àµÄ¸ß¼¶ÓïÑÔÓï·¨,ÕâµãÎÒ³ÐÈÏ,ÒòÎªnesa²»ÊÇÎÒÏëÒªµÄ,ÎÒÏëÒªµÄÊÇnesc,¶ønescÉæ¼°Ì«¶àÌ«¸´ÔÓµÄ±àÒëÔ­Àí¶«Î÷,ÎªÁË¼õÉÙÎÒnescµÄ¸ºµ£,ÎÒ°ÑÒ»²¿·Ö¿ÉÒÔ×ªÒÆµÄ¶«Î÷¶¼·Åµ½ÁËnesaÉÏ,ÓÉ´ËÔì³ÉÁËnesaÔÚÊ¹ÓÃÉÏ±ÈÆÕÍ¨µÄ»ã±à±àÒëÆ÷¸´ÔÓµÃ¶à,µ«Ä¿Ç°°æ±¾µÄnesa»¹²»Ëã¸´ÔÓ,ÒòÎª»¹Ã»ÓÐºêºÍº¯ÊýµÄÖ§³Ö,ÔÙÍùºóµÄ°æ±¾¿ÉÄÜ¾Í»áÔâµ½¸ü¶àÈËµÄÖ¸ÔðÁË,ºÇºÇ,Ï×¸ø´ó¼ÒÔ¤¸æÒ»ÏÂ,Ï£Íûµ½Ê±ºòÉÙÅ×Ð©×©¿é
+		7)´Ë°æ±¾Ö®ºó±¾ÈË½«³ÁÄ¬ºÃ³¤Ò»¶ÎÊ±¼ä,ÒòÎª¹¦¿Î±ÈÈü¿¼ÊÔµÈµÈ¶«Î÷¶¼±È½ÏµÄ¶à,Ï£Íû¸÷Î»ÁÂ½â
+		8)ÈçÓÐBug(s),ÇëÓë±¾ÈËÁªÏµ
+
+E-Mail:trbbadboy@qq.com
+QQ:472497084
+2011-03-10
+trbbadboyÓÚËÞÉá
+
+
+
+nesa v1.0ËµÃ÷
+´óÐ¡Ð´:
+	³ýÁËÒýºÅÀïÃæµÄ×ÖÄ¸Çø·Ö´óÐ¡Ð´Ö®Íâ,ÆäËûµÄÒ»ÂÉ×ª»»Îª´óÐ´Ö®ºóÔÙ½øÐÐ±àÒë
+	Ê¹ÓÃÒýºÅÊ±Ðè×¢ÒâÆ¥Åä,ËäÈ»¶ÔÒýºÅµÄÆ¥ÅäÃ»ÓÐ½øÐÐÍêÈ«¼ì²é,µ«ÊÇÓ¦¸ÃÓÐÕâÑùµÄºÃÏ°¹ß
+	Ô­ÔòÉÏÒýºÅÀïÃæµÄ¶«Î÷ÊÇÔ­·â²»¶¯µÄ
+	
+ÊýÖÆºÍµØÖ·:
+	±àÒëÆ÷Ìá¹©4ÖÖÊýÖÆ,µ«ÊÇÍÆ¼öÊ¹ÓÃ16½øÖÆ
+	¶þ½øÖÆ:ÒÔ%¿ªÍ·,Èç%1000
+	°Ë½øÖÆ:ÒÔ0¿ªÍ·,Èç08
+	Ê®½øÖÆ:ÒÔ1µ½9¿ªÍ·,Èç12
+	Ê®Áù½øÖÆ:ÒÔ$¿ªÍ·,Èç$1A
+	Ð¡½á:%11111111=0377=255=$ff
+	
+	µØÖ·:¼òµ¥µÄÊý¾Ý¾ÍÊÇµØÖ·,Èç¹ûÊý¾Ý³¬¹ý255»òÕßÔÚ¼Ó0ÔòÀí½âÎªÈ«µØÖ·
+	Ð¡½á:	$ff±íÊ¾ÁãÒ³µØÖ·ff
+			$0000±íÊ¾È«µØÖ·0000
+			255±íÊ¾ÁãÒ³µØÖ·ff
+			256±íÊ¾È«µØÖ·0100
+	ÌáÊ¾:ÍÆ¼öÊ¹ÓÃ16½øÖÆµÄÔ­ÒòÒ²ÔÚÕâÁË,ÊÇÎªÁËÈ·±£±àÒëÆ÷¶ÔµØÖ·ÀàÐÍµÄÅÐ¶Ï
+
+ÔËËã·û:ÔËËã¹æÔò×ñÑ­´ÓÓÒµ½×óµÄË³Ðò,ÔËÐÐÔËËãµþ¼Ó
+	>:È¡¸ßÎ»ÔËËã·û,ÔËËãºóµÄ½á¹ûÀàÐÍÎªÁãÒ³µØÖ·($xxÐÎÊ½)
+	<:È¡µÍÎ»ÔËËã·û,ÔËËãºóµÄ½á¹ûÀàÐÍÎªÁãÒ³µØÖ·($xxÐÎÊ½)
+	+:È¡ºóÒ»Î»ÔËËã·û,ÔËËãºóµÄ½á¹ûÀàÐÍÈ¡¾öÓë±»ÔËËãµÄÊý
+	-:È¡Ç°Ò»Î»ÔËËã·û,ÔËËãºóµÄ½á¹ûÀàÐÍÈ¡¾öÓë±»ÔËËãµÄÊý
+	#:Ç¿ÖÆ×ª»»ÎªÊý¾ÝÔËËã·û,ÔËËãºóµÄ½á¹ûÎª°ËÎ»Á¢¼´Êý(#$xxÐÎÊ½),×¢Òâ#×ª»»ºóµÄÁ¢¼´ÊýÎª°ËÎ»,Ã»ÓÐ×ª»»µ½Ê®ÁùÎ»Á¢¼´ÊýµÄÔËËã·û
+	@:Ç¿ÖÆ×ª»»ÎªÈ«µØÖ·ÔËËã·û,ÔËËãºóµÄ½á¹ûÀàÐÍÎªÈ«µØÖ·($xxxxÐÎÊ½)
+	&:Ç¿ÖÆ×ª»»ÎªÁãÒ³µØÖ·,ÔËËãºóµÄ½á¹ûÀàÐÍÎªÁãÒ³µØÖ·($xxÐÎÊ½)
+	[index]:Æ«ÒÆ(ÏÂ±ê)ÔËËã·û,indexµÄÖµ±ØÐëÊÇÒ»¸ö³£Á¿(»òÕß³£Á¿±í´ïÊ½),ÓëÆäËûÓïÑÔ²»Í¬,[index]·ÅÔÚÒªÇóÆ«ÒÆµÄ»ùÖµÇ°Ãæ¶ø²»ÊÇºóÃæ,Æ«ÒÆÔËËãÊÇÎªÁË¼õÉÙ+µÄ¶à´ÎÔËËã¶øÒýÈëµÄ,Æ«ÒÆÔËËãµÄindexÖ»ÄÜÊÇÕýÊý,ÆäÒç³ö¹æÔòºÍ+µÄÒ»Ñù
+	
+	Ð¡½á:	>$ff:µÈÓÚ$00,ÁãÒ³µØÖ·,Òò$ff=$00ff,Æä¸ßÎ»Îª0
+			<$1234:µÈÓÚ$34,ÁãÒ³µØÖ·
+			-$2001:µÈÓÚ$2000,È«µØÖ·,$2001µÄÇ°Ò»Î»ÊÇ$2000
+			+$ff:µÈÓÚ$00,ÁãÒ³µØÖ·,»á³öÏÖÉÏÒç¾¯¸æ(warning:the number over flow:$FF),½âÊÍ:$ff±»Àí½âÎªÁãÒ³µØÖ·,ÁãÒ³µØÖ·µÄ×î´óµØÖ·Îª$ff,ÏòºóÈ¡Ò»×ÔÈ»¾ÍÊÇ$00ÁË
+			#-$ff:µÈÓÚ#$fe,Á¢¼´Êý
+			<>$ff:µÈÓÚ$00,ÁãÒ³µØÖ·,Ò»¸öÊý±»È¡¸ßµØÎ»Ö®ºóÖµÎªÁã
+			@#<>$10:µÈÓÚ$0000,È«µØÖ·,>$10=$00 <$00=$00 #$00=#$00 @#$00=$0000
+			[$3]$10:µÈÓÚ$13,ÁãÒ³µØÖ·,
+			++[$20][$10]@$00:µÈÓÚ$0032,È«µØÖ·,°´ÕÕ´ÓÓÒµ½×óµÄË³Ðò@$00=$0000 [$10]$0000=$0010 [$20]$0010=$0030 ++$0030=$0032
+	²¹³ä:	Ô­ÔòÉÏÄã¿ÉÒÔÎÞÏÞ´ÎÊ¹ÓÃÔËËã·û,Èç:
+			++++++++++++++++++++$00;//Õâ¸öµÈ$14=[20]$00=[$14]$00
+			µ«ÊÇ»¹ÊÇ½¨ÒéÄã²»ÒªÊ¹ÓÃÕâÃ´³¤µÄÔËËã,Ô­ÒòÓÐÈý:
+				a)²»·½±ãÄãÊéÐ´ºÍÀí½â
+				b)±àÒëÆ÷¿ÉÄÜÊÜ²»ÁËÄãÕâÃ´ÕÛÄ¥Ëü,³ö´íÁË×î²ÒµÄÊÇÄã±¾ÈË
+				c)ÕâÑùÐ´µÄ»°Æ«ÒÆÔËËãÊÇ¸ÉÂïÓÃµÄ
+
+¾ä·¨Óï·¨:
+	1.Óï¾ä:
+		Ã¿ÐÐ¾ä×ÓÄãÐ´¶àÌõÓï¾ä,Ã¿ÌõÓï¾ä½áÊøºóÓÃ·ÖºÅ(';')¸ô¿ª,Èç:
+		LDA #%10000000; STA $2000;
+		·ÖºÅÖ®ºó½¨ÒéÓÃ¿Õ¸ñ¸ô¿ª
+	2.×¢ÊÍ:
+		1)µ¥ÐÐ×¢ÊÍ:
+			ÀàËÆC/C++ÓïÑÔµÄ¹æ·¶,Ê¹ÓÃË«Ð±¸Ü"//"½øÐÐ×¢ÊÍ,´Ó"//"¿ªÊ¼,ÕâÒ»ÐÐÖ®ºóµÄ´úÂë¶¼½«±»ºöÂÔ,Èç:
+			jsr wait	//µÈ´ýVBLank
+		2)¶àÐÐ×¢ÊÍ:
+			ÀàËÆC/C++Óï·¨µÄ¹æ·¶,´Ó"/*"¿ªÊ¼µ½"*/"µÄ´úÂë¶¼½«ºöÂÔ,¶ø²»¹ÜÄãÊÇÒ»ÐÐ»¹ÊÇ¶àÐÐ,Èç:
+			/*
+			ÕâÊÇÒ»¸ö×¢ÊÍ
+			2011-2-14
+			µÈ´ýVBlank
+			*/
+			wait://µÈ´ýVBlank
+				bit PPUSTATUS
+				bpl wait
+				rts	
+			µ±È»,Äã¿ÉÒÔÐ´³ö¸üÎª·è¿ñµÄ´úÂë,Èç:
+			LDA /*ÕâÀïÓÐµã·è¿ñ*/ #%10000000
+	3.»ã±àÓï·¨:
+		»ù±¾6502µÄ»ã±àÓï·¨,×Ô¼º°Ù¶È¡¢¹È¸è°É
+	
+Î±Ö¸Áî½éÉÜ:ËùÓÐµÄÎ±Ö¸Áî¶¼ÊÇÒÔÓ¢ÎÄ×´Ì¬ÏÂµÄµã('.')¿ªÍ·µÄ,Î±Ö¸ÁîÖÐµÄËùÓÐÖµ±ØÐëÊÇ³£Á¿»òÕß³£Á¿±í´ïÊ½,»¹ÓÐ±ØÐëµÄÖ¸³öµÄÊÇÔÚ¸Ã°æ±¾ÖÐ(1.0)ËùÓÐ³£Á¿»òÕß³£Á¿±í´ïÊ½µÄÖµ±ØÐëÐ¡ÓÚ$10000
+	0.ÎÄ¼þ°üº¬:
+		1)Ö¸Áî:.INCLUDE
+		2)×÷ÓÃ:°üº¬ÆäËû´úÂëÎÄ¼þ
+		3)ÓÃ·¨:.INCLUDE filename
+		4)²ÎÊýËµÃ÷:
+			A.filename:Òª±»°üº¬µÄÎÄ¼þÃû
+		5)¼òµ¥Àý×Ó:.include head.inc	//°üº¬head.incÖÐµÄ´úÂë
+		6)²¹³ä:
+			A.Ò»´Î½öÔËÐÐ°üº¬Ò»¸öÎÄ¼þ
+			B.²úÉúÖØ¸´°üº¬»òÕß°üº¬×ÔÉíÊ±½«µÃµ½Ò»¸ö¾¯¸æ(already include file:HEAD.INC),ÒâË¼ÊÇÒÑ¾­°üº¬ÁËhead.incÎÄ¼þ
+	1.ÎÄ¼þ²¼¾Ö(´úÂë¶Î¶¨Òå):
+		1)Ö¸Áî:.SEGMENTDEFINE (ËõÐ´:.SEGDEF)
+		2)×÷ÓÃ:ÔÚÊä³öÎÄ¼þÖÐ¶¨ÒåÒ»¸ö´úÂë¶Î
+		3)ÓÃ·¨:.segmentdefine name = segname, size = segsize, start = segstart, fill = segfill;
+		4)ÊôÐÔËµÃ÷:
+			A.name:´úÂë¶ÎµÄÃû³Æ
+			B.size:´úÂë¶ÎµÄ´óÐ.¨ÒÔ×Ö½ÚËã)
+			C.start:ÔËÐÐÊ±´úÂë¶Î±»·ÅÖÃµ½µÄCPUÄÚ´æÆðÊ¼Î»ÖÃ(²»±»·ÅÖÃµ½CPUÄÚ´æµÄ´úÂë¶Î¿ÉÒÔ²»ÉèÖÃ)
+			D.fill:´úÂë¶ÎÄ¬ÈÏµÄÌî³äÖµ
+		5)¼òµ¥µÄÀý×Ó:.segmentdefine name = HEAD, size = 16, start = 0, fill = 0;//Õâ¸öÊÇNESÍ·µÄ´úÂë¶Î¶¨Òå
+		6)²¹³ä:
+			A.µÚÒ»´Î¶¨ÒåµÄ´úÂë¶Î±»µ±×÷Ä¬ÈÏ´úÂë¶Î,ÔÚÃ»ÓÐÊ¹ÓÃÆäËû´úÂë¶ÎÊ±Ò»Ö±Ê¹ÓÃ¸Ã´úÂë¶Î
+			B.´úÂë¶ÎÔÚÊä³öÎÄ¼þÖÐµÄË³ÐòºÍ¶¨Òå´úÂë¶ÎµÄË³ÐòÒ»ÖÂ,ËùÒÔÎÒµÄ½¨ÒéÊÇÏÈ¹æ»®ºÃÐèÒªµÄ´úÂë¶Î,È»ºóÔÚÎÄ¼þµÄ¿ªÊ¼¾Í°ÑËùÓÐµÄ´úÂë¶Î¶¨ÒåºÃ,Ö®ºó¾Í·½±ãÊ¹ÓÃÁË
+			C.²»ÔÊÐíÖØ¸´¶¨ÒåÃû³ÆÏàÍ¬µÄ´úÂë¶Î,·ñÔòÌáÊ¾´íÎó(already define segment:HEAD)
+			D.Ã»ÓÐ¶¨ÒåÈÎºÎ´úÂë¶ÎÖ®Ç°,ÊÇ²»ÔÊÐíÄãÐ´ÈÎºÎ»á¶ÔÊä³öÎÄ¼þ½øÐÐÐ´²Ù×÷µÄÓï¾äµÄ(Èç´¿»ã±àÓï¾ä,.STRING .DATAµÈÓï¾ä),Èç¹ûÄãÐ´,½«µÃµ½´íÎó(undefine any segment:),ÒâË¼ÊÇÎ´¶¨ÒåÈÎºÎ´úÂë¶Î
+			E.×¢Òâ,¶¨Òå´úÂë¶ÎÊ±,ËùÓÐµÄÁ¿¶¼±ØÐëÊÇÒ»¸ö³£Á¿(»òÕß³£Á¿±í´ïÊ½)
+			F.µ±Ç°°æ±¾µÄsize±ØÐëÐ¡ÓÚ$10000
+	2.´úÂë¶ÎÑ¡Ôñ:
+		1)Ö¸Áî:.SEGMENT (ËõÐ´:.SEG)
+		2)×÷ÓÃ:Ñ¡Ôñµ±Ç°µÄ´úÂë¶Î
+		3)ÓÃ·¨:.SEGMENT segname
+		4)²ÎÊýËµÃ÷:
+			A.segname:ÒªÑ¡ÔñµÄ´úÂë¶ÎÃû³Æ
+		6)¼òµ¥Àý×Ó:.segment HEAD; //Ñ¡Ôñµ±Ç°´úÂë¶ÎÎªHEAD´úÂë¶Î
+		7)²¹³ä:
+			A.²»ÔÊÐíÑ¡Ôñ²»´æÔÚµÄ´úÂë¶Î,·ñÔòÌáÊ¾´íÎó(have no such segment:FROM)
+	3.´úÂëÆðÊ¼Î»ÖÃ:
+		1)Ö¸Áî:.ORG
+		2)×÷ÓÃ:ÉèÖÃ´úÂëµÄÆðÊ¼Î»ÖÃ
+		3)ÓÃ·¨:.ORG orgaddress
+		4)²ÎÊýËµÃ÷:
+			A.orgaddress:ÆðÊ¼Î»ÖÃ,µØÖ·ÀàÐÍ
+		5)¼òµ¥Àý×Ó:.org $9000
+		6)²¹³ä:
+			A).orgÖ¸ÁîÖ»¶Ôµ±Ç°ËùÊ¹ÓÃµÄ´úÂë¶ÎÓÐÐ§,µ±ÄãÊÔÍ¼Ê¹ÓÃ.org°ÑÆðÊ¼¶¨Î»ÔÚ³¬Ô½µ±Ç°´úÂë¶Î·¶Î§µÄÎ»ÖÃÊ±½«µÃµ½Ò»¸ö´íÎó(the org address is out of range:(rang:$8000 to $BFFA):$F000),¸Ã´íÎóµÄÒâË¼ÊÇ:ÄãÊÔÍ¼¶¨Î»µ½$F000,µ«ÊÇµ±Ç°´úÂë¶ÎµÄ·¶Î§Îª$8000µ½$BFFA
+			B).orgµÄ²ÎÊýÓÃstart´ú±íÊ±±íÊ¾»Øµ½µ±Ç°´úÂë¶ÎµÄÆäÊµÎ»ÖÃ(¶¨Òå´úÂë¶ÎÊ±µÄstart),Èç:.org start
+			C).orgÊÇÒ»¸öÌøÔ¾ÐÔµÄÖ¸Áî,Èç¹ûÄã²»ÄÜºÜÇå³þµÄÈÏÊ¶µ½Äã½«.orgµÄµØ·½ÊÇ·ñÓÐÊý¾ÝµÄ»°½¨ÒéÄã×îºÃ±ðÓÃ
+			D).org¶ÔÎÄ¼þ²¼¾ÖµÄÊ¹ÓÃÇé¿öÒ²ÓÐÓ°Ïì,Ì«¶àµÄ.orgÖ¤Ã÷»¹¿ÉÄÜµ¼ÖÂÊä³öÎÄ¼þÖÐÌ«¶àµÄµØ·½³öÏÖ¿ÕÊý¾Ý¿é
+			E)orgaddress±ØÐëÊÇÒ»¸ö³£Á¿»òÕß³£Á¿±í´ïÊ½
+			F)ÔÙ´ÎÇ¿ÁÒ½¨Òé²»ÒªËæËæ±ã±ãÊ¹ÓÃ.org
+	4.¶¨Òå±êÇ©:
+		1)Ö¸Áî:.LABEL (ËõÐ´:.LAB)
+		2)×÷ÓÃ:¶¨ÒåÒ»¸ö±êÇ©,±ãÓÚÌø×ª»òÕß¼ÇÒäÄ³Ð©µØÖ·
+		3)ÓÃ·¨:.LABEL labname = labvalue
+		4)²ÎÊýËµÃ÷:
+			A.labelname:±êÇ©Ãû,²»ÔÊÐíÖØ¸´,È«¾Ö±êÇ©½¨ÒéÊ¹ÓÃÏÂ»®Ïß¿ªÍ·
+			B.labvalue:±êÇ©Öµ,Ò»¸öÊý¾Ý(#$xx)¡¢Ò»¸öÈ«µØÖ·($xxxx)¡¢Ò»¸öÁãÒ³µØÖ·($xx)»òÕßÊÇÒ»¸öÔËËã±í´ïÊ½
+		5)¼òµ¥Àý×Ó:.label PPUCTRL = $2000;	//¶¨Òå±êÇ©PPUCTRL,Æä´ú±íµÄÊÇÈ«µØÖ·$2000
+		6)²¹³ä:
+			A)¿ÉÄÜÃ»ÓÐlabvalue,ÕâÑù¸Ã±êÇ©¾ÍÊÇÒ»¸ö¼´Ê±±êÇ©,±êÇ©µÄÎªÈ«¾ÖµØÖ·,ÖµÎªµ±Ç°Î»ÖÃ
+			B)¿ÉÒÔÃ»ÓÐÎ±Ö¸Áî.labelµ«ÊÇÔÚ±êÇ©ºóÃæ¼ÓÃ°ºÅ(':')À´¶¨ÒåÒ»¸ö¼´Ê±±êÇ©,Èç:_reset:
+			C)¶¨Òå±êÇ©Ê±Ö§³ÖÔËËã,±êÇ©µÄÀàÐÍ¾ÍÊÇÔËËã±í´ïÊ½µÄÀàÐÍ
+			D)labvalue±ØÐëÊÇÒ»¸ö³£Á¿»òÕß³£Á¿±í´ïÊ½
+	5.µ¼Èë×Ö½ÚÊý¾Ý:
+		1)Ö¸Áî:.BYTE
+		2)×÷ÓÃ:ÔÚµ±Ç°Î»ÖÃÐ´Èë×Ö½ÚÊý¾Ý
+		3)ÓÃ·¨:.BYTE bt0,bt1,bt2...
+		4)²ÎÊýËµÃ÷:
+			A.bt0,bt1,bt2...:ÐèÒªÐ´ÈëµÄÊý¾Ý
+		5)¼òµ¥Àý×Ó:byte #$4e, #$45, #$53, #$1A;	//NESÍ·"NES^Z"
+		6)²¹³ä:
+			A)µ±ÄãÊÔÍ¼½«Ò»¸ö³¬Ô½255µÄÊý(»òÕßÐ´ÈëÒ»¸öË«×Ö½ÚÊý¾Ý)Ð´ÈëÊ±½«µÃµ½¾¯¸æÌáÊ¾,¸æËßÄãÀàÐÍ²»Æ¥Åä
+			B)Êý¾ÝÖ®¼äµÄ¶ººÅ(',')¿ÉÒÔÊ¡ÂÔ²»Ð´,Ö»ÐèÓÃ¿Õ¸ñ¸ô¿ª¾ÍÐÐ
+			C)Ð´ÈëµÄÊý¾Ý²»¹ÜºÎÖÖ¸ñÊ½,¶¼Ò»ÂÉ±»±àÒëÆ÷Àí½âÎªÁ¢¼´Êý(#$xx)
+			
+	6.µ¼ÈëË«×Ö½ÚÊý¾Ý:
+		1)Ö¸Áî:.WORD
+		2)Àý×Ó:.word _nmi _reset _irq;	//Ð´ÈëÈý¸öÖÐ¶ÏÈë¿Ú
+		3)²¹³ä:
+			A.»ù±¾ÓÃ·¨ºÍ.BYTEÒ»Ñù,Ö»ÊÇÐ´ÈëµÄÊÇË«×Ö½Ú¶øÒÑ
+			B.Ð´ÈëµÄ¹æÔòÊÇµÍ°ËÎ»ÔÚÇ°,¸ß°ËÎ»ÔÚºó
+			C)Ð´ÈëµÄÊý¾Ý²»¹ÜºÎÖÖ¸ñÊ½,¶¼Ò»ÂÉ±»±àÒëÆ÷Àí½âÎªË«×Ö½ÚÁ¢¼´Êý(#$xxxx)
+	7.µ¼Èë»ìºÏÊý¾Ý
+		1)Ö¸Áî:.DATA
+		2)¼òµ¥Àý×Ó:.DATA $12, $0034, $789A;	//Ð´µ¥×Ö½ÚÊý¾Ý#$12,Ð´ÈëË«×Ö½ÚÊý¾Ý#$0034ºÍ#$789A
+		3)²¹³ä:
+			A.¸ÃÖ¸ÁîÓëÇ°Á½ÖÖÖ¸ÁîµÄÇø±ðÔÚÓÚ¿ÉÒÔ×Ô¶¯Ê¶±ðÊý¾ÝÀàÐÍÈ»ºóÑ¡ÔñºÏÊÊµÄÐ´Èë·½Ê½
+			B.Èô·Ç±ØÐë,²»ÍÆ¼öÊ¹ÓÃ¸ÃÖ¸Áî,»¹ÊÇÈË¹¤Ê¶±ðÊý¾ÝÐ´Èë·½Ê½À´µÄ±£ÏÕ
+	8.µ¼Èë×Ö·û´®:
+		1)Ö¸Áî:.STRING (ËõÐ´:.STR)
+		2)×÷ÓÃ:Ð´Èë×Ö·û´®,²¢ÔÚ×îºóÌí×Ö·û´®½áÊø±êÖ¾'\0'
+		3)ÓÃ·¨:.STRING str
+		4)²ÎÊýËµÃ÷:
+			A.str:ÒªÐ´ÈëµÄ×Ö·û´®,½¨ÒéÓÃÒýºÅÒýÆðÀ´
+		5)¼òµ¥Àý×Ó:.string "Hello FC World!!!"; //Ð´Èë×Ö·û´®"Hello FC World!!!"
+		6)²¹³ä:
+			A.½÷¼Ç:Ð´Èë×Ö·û´®Ö®ºó»áÔÚÐ´ÈëÊý¾Ý0À´×÷Îª´®½áÊø±êÖ¾
+	
+	9.µ¼Èë¶þ½øÖÆÎÄ¼þ:
+		1)Ö¸Áî:.INCLUDEBIN (ËõÐ´:.INCBIN)
+		2)×÷ÓÃ:´ò¿ªÒ»¸ö¶þ½øÖÆÎÄ¼þ,½«ÀïÃæµÄÊý¾ÝÔ­ÑùÐ´Èëµ½Êä³öÎÄ¼þ
+		3)ÓÃ·¨:.INCLUDEBIN binfilename
+		4)²ÎÊýËµÃ÷:
+			A.binfilename:¶þ½øÖÆÎÄ¼þÃû
+		5)¼òµ¥Àý×Ó:.includebin "ascii.chr";	//°üº¬¶þ½øÖÆ×ÖÄ£Êý¾Ýascii.chr
+		6)²¹³ä:
+			A.ÆäÊµ²»¹ÜÎÄ¼þÊÇ·ñÎª¶þ½øÖÆÎÄ¼þ,Èç¹ûÄãÐèÒªÐ´Èë´óÁ¿µÄÎÄ±¾Êý¾ÝµÄ»°Ò²¿ÉÒÔÓÃ¸ÃÃüÁî°üº¬Ò»¸öÎÄ±¾ÎÄ¼þ
+
+	10.ÉèÖÃ¾¯¸æ¼¶±ð
+		1)Ö¸Áî:.WARNING
+		2)×÷ÓÃ:ÉèÖÃ±àÒëÆ÷ÌáÊ¾¾¯¸æµÄ¼¶±ð
+		3)ÓÃ·¨:.WARNING warnlevel
+		4)²ÎÊýËµÃ÷:
+			A.warnlevelÊÇÒ»¸ö0µ½2Ö®¼äµÄÊý,0Îª×î¸ß¼¶,ÌáÊ¾Ö®ºó±ãÖÐ¶Ï±àÒë,1ÎªÖÐ¼¶,ÌáÊ¾ºó¼ÌÐø±àÒë,2ÎªµÍ¼¶,Ö±½ÓºöÂÔÌáÊ¾
+		5)¼òµ¥Àý×Ó:.warning 1;	//ÉèÖÃÎªÆÕÍ¨¼¶±ð
+		6)²¹³ä:
+			A.Ä¬ÈÏÖµÎª1
+			B.¾¯¸æµÄÏûÏ¢Ò»°ãÊÇÊý¾ÝÎÞÐ§¡¢ÉÏÒç¡¢ÏÂÒçµÈµÈ,Ò»°ã²»»áµ¼ÖÂ±àÒëºóµÄ³ÌÐò³ö´í,µ«ÊÇÓÐ±ØÒª¿´Ò»ÏÂÊÇÊ²Ã´Çé¿ö,ËùÒÔ½¨ÒéÊ¹ÓÃÄ¬ÈÏÖµ(Ò²¾ÍÊÇÎÞÐèÊÖ¶¯ÉèÖÃ)
+	
+	11.ÉèÖÃ´íÎó¼¶±ð
+		1)Ö¸Áî:.ERROR
+		2)²¹³ä:
+			A..ERRORµÄÊ¹ÓÃºÍ¼¶±ð¶¨ÒåÀàËÆ.WARNING
+			B.ÌáÊ¾´íÎóÖ®ºó»ù±¾ÉÏ±àÒëºóµÄ³ÌÐòÊÇ²»ºÏ·¨µÄ,ËùÒÔ³ö´í¾ÍÃ»±ØÒªÔÙÍùÏÂ±àÒëÁË,ËùÒÔÄ¬ÈÏ¼¶±ðÊÇ0,Í¬ÑùÒ²½¨ÒéÊ¹ÓÃ¸Ã¼¶±ð,ÎÞÐèÊÖ¶¯ÉèÖÃÁË
+	
+	12.×îºóÊÇÈý¸ö±àÒëÆ÷ÄÚ²¿Ê¹ÓÃµÄ´íÎóÎ»ÖÃ¶¨Î»Æ÷:
+		.POINT filename line:¾ø¶Ô¶¨Î»(ÎÄ¼þºÍÐÐÍ¬Ê±¶¨Î»)
+		.FILE filename:½ö¶¨Î»ÎÄ¼þ
+		.LINE line:½ö¶¨Î»ÐÐ
+		²¹³ä:ÕâÈý¸öÊÇ±àÒëÆ÷ÊµÏÖ´íÎó(»òÕß¾¯¸æ)Ê±ÓÃÀ´¶¨Î»´úÂëÐÐµÄ,ÓÉÓÚÖ»ÊÇÄÚ²¿Ê¹ÓÃ,Ò²¾ÍÃ»±ØÒª¹«¿ªÁË,Èç¹û½ñºó¾õµÃÓÐ±ØÒªµÄ»°±¾ÈË»áÌáµÄ
+
+ÊýºÍ±êÇ©²¹³ä:
+	0.µØÖ·×ª»»µ½Á¢¼´Êý($xxµ½#$xx»òÕß$xxxxµ½#$xxxx)µÄ¹ý³Ì±àÒëÆ÷¿ÉÒÔ×Ô¶¯Íê³É,µ«ÊÇ·´¹ýÀ´ÔòÐèÒªÄãÏÔÊ½µÄ×ª»»(ÔÚÇ°Ãæ¼Ó@»òÕß&),ÄÜÃ÷È·µÄÖªµÀ×ª»»µÄµØ·½½¨ÒéÄã»¹ÊÇÏÔÊ½µÄ×ª»»Ò»ÏÂ¶ø²»ÓÃ¹ý¶ÈÒ»À´±àÒëÆ÷
+	1.µ¥×Ö½Úµ½Ë«×Ö½ÚµÄ×ª»»Ò²ÊÇ±àÒëÆ÷¿ÉÒÔ×Ô¶¯Íê³ÉµÄ,µ«ÊÇ·´¹ýÀ´¾Í¿ÉÄÜ»áµÃµ½¾¯¸æ,ËùÒÔÒ²±ØÐëÄãÏÔÊ½µÄ×ª»»
+	2.Ã»ÓÐ¶¨Òå¾ÍÊ¹ÓÃµÄ±êÇ©(³ÉÎª³¬Ô½±êÇ©)½«±»±àÒëÆ÷ÈÏÎªÊÇÒ»¸öÈ«µØÖ·±êÇ©($xxxx),ËùÒÔÄãÒªÊ¹ÓÃÒ»¸ö»¹Ã»ÓÐ¶¨ÒåµÄ±êÇ©¶øÓÖ²»Ïë°ÑËüµ±×÷È«µØÖ·µÄÊ±ºò×îºÃÏÔÊ½µÄ×ª»»Ò»ÏÂ
+	3.Ó¦ÓÃ¾ÙÀý:
+		0)µØÖ·ºÍÁ¢¼´ÊýµÄ×ª»»:.byte $ffºÍ.byte #$ffÒ»Ñù
+		1)µ¥Ë«×Ö½ÚµÄ×ª»»:
+			.word $ff;	//ÕýÈ·,×Ô¶¯×ª»»Îª#$00ff
+			.byte $00ff;	//»áÓÐ¾¯¸æ,Äã¿ÉÒÔÐ´³É.byte <$00ff(È¡µÍÎ»)»òÕß.byte #$00ff(ÏÔÊ½×ª»»Îª°ËÎ»Á¢¼´Êý)
+		2)³¬Ô½±êÇ©µÄÊ¹ÓÃ:
+			A.Õý³£µÄÈ«µØÖ··½Ê½Ê¹ÓÃ:
+				...
+				dex
+				bne	label1;	//ÕâÀïÊ¹ÓÃÁËÒ»¸ö³¬Ô½±êÇ©label1,ÎÒÃÇÊÇµ±×÷È«µØÖ·($xxxx)Ê¹ÓÃµÄ
+				...	//´úÂëÂÔ
+				label1:
+				...	//´úÂëÂÔ
+			B.²»ÊÇµ±×÷È«µØÖ·Ê¹ÓÃÊ±:
+				lda #<label1	//Ê¹ÓÃÁËlabel1³¬Ô½±êÇ©µÄµÍ°ËÎ»,Ö¸Áî±»½âÎöÎªlda #$xx
+				sta $00
+				lda #>label1
+				sta $01
+				jmp ($0000)
+			label1:				//ÔÚÕâÀï±êÇ©²Å±»¶¨Òå
+				...	//´úÂëÂÔ
+				
+±àÒëÆ÷ÃüÁîÐÐÊ¹ÓÃËµÃ÷:
+	-o name        ÉèÖÃÊä³öÎÄ¼þÃûÎªname(Î´ÉèÖÃµÄ»°¾ÍÊÇÔ´´úÂëÃû¼Ó.nesºó×º)
+	-w num         ÉèÖÃ¾¯¸æ¼¶±ðÎªnum(0-2)
+	-e num         ÉèÖÃ´íÎó¼¶±ðÎªnum(0-2)
+	-v             ÏÔÊ¾°æ±¾ÐÅÏ¢
+	-h             °ïÖú
+	--i            ÏÔÊ¾±àÒëÆ÷Ö§³ÖµÄÖ¸Áî¼¯ÄÚÈÝ
+	--l            ±àÒëÍê³ÉºóÏÔÊ¾±êÇ©ÐÅÏ¢
+	--s            ±àÒëÍê³ÉºóÏÔÊ¾´úÂë¶ÎÐÅÏ¢
+	--t            ±àÒëÍê³ÉºóÏÔÊ¾ÈÎÎñÐÅÏ¢(³¬Ô½±êÇ©µÄÊ¹ÓÃÇé¿ö)
+	¼òµ¥¾ÙÀý:nesa.exe HelloWorld.asm ±àÒë³É¹¦µÄ»°½«µÃµ½HelloWorld.nes
+
+±àÒëÆ÷µÄ²¹³ä:
+	0.±àÒëÆ÷Ê¹ÓÃÎÄ¼þ²¼¾ÖµÄ·½Ê½À´½â¾öÁËNESÖÐ²»Í¬MapperµÄÎÄ¼þ²¼¾ÖÎÊÌâ
+	1.×îºÃÊÇÐ´ºÃ³£ÓÃµÄ¼¸¸ö²»Í¬MapperÎÄ¼þ²¼¾ÖµÄÍ·ÎÄ¼þ,ÕâÑùÐèÒªµÄÊ±ºòÖ»ÐèÔÚ´úÂëµÄ¿ªÍ·ÓÃ.includeÖ¸Áî°üº¬¾Í¿ÉÒÔÐ´³ÌÐòÁË
+	2.±àÒëÆ÷Ã»ÓÐ¾­¹ýÇ¿ÓÐÁ¦µÄ²âÊÔ,¶ÔÓÚÄÚ´æµÄ·ÖÅäÒ²¶¼Ã»ÓÐ½øÐÐÈÎºÎ¼ì²â,¿ÉÄÜ»á²úÉúÄ³Ð©ÔËÐÐÊ±´íÎó,ÍûÁÂ½â
+	3.×÷Îªnesc¼Æ»®µÄÒ»¸ö²¿·Ö,nesa³Ðµ£µÄÊÇ»ã±à´úÂëµ½NESµÄÕûºÏ²¿·Ö,ÕâÖ±½ÓÓ°Ïìµ½Cµ½NESÄÜ·ñ³É¹¦,·¢ÏÖBugÏ£ÍûÄãÄÜ¼´Ê±ÁªÏµÎÒ
+	4.±àÒëÆ÷Ê¹ÓÃVC6.0ºÍgcc±àÒëÍ¨¹ý,VC6.0µÄ·¢²¼°æ±¾ÓÐ200K,¶øgccµÄÓÐ1.35M(¿ÉÄÜÊÇ±àÒëÃüÁî²»¶Ô),ÎªÁË½ÚÔ¼¿Õ¼ä,¸ø´ó¼ÒµÄÊÇVC6.0Éú³ÉµÄ
+	5.Õâ¸ö°æ±¾µÄ±àÒëÆ÷Ã»ÓÐÌá¹©ºêºÍº¯ÊýµÄÊ¹ÓÃ,ºóÐø°æ±¾ÖÐ»áÌá¹©µÄ,ÓÈÆäÊÇº¯ÊýµÄÖ§³Ö
+
+µ¹ÊýµÚ¶þÊÇ¸ÐÏëÖ§³Ö,¸ÐÏëÔÄ¶Á,¸ÐÏëÊ¹ÓÃ!!!
+×îºóÊÇ°æÈ¨ËµÃ÷,°æÈ¨¹é¸öÈËËùÓÐ,»ØÊÕËùÓÐÏà¹Ø°æÈ¨,ÇëÎð·´Ïò¹¤³Ì!!!
+E-Mail:trbbadboy@qq.com
+QQ:472497084
+2011-02-14
+trbbadboyÓÚ¼ÒÖÐ
+
+
+
+
+°æ±¾ºÍ·¢²¼¼ÇÂ¼:
+V1.1 2011-3-10Íê³É
+	1.Î±Ö¸ÁîµÄËõÐ´
+	2.Ìí¼ÓÖÐ¶ÏÖ¸Áî:int $xxxx
+	3.´óÊý(³¬¹ý$ffffµÄ)µÄÖ§³Ö
+	4.ÄäÃû±êÇ©
+	5.Õ»Ê½±êÇ©
+
+V1.0 2011-2-14Íê³É
+	ÊµÏÖ»ã±àµ½nesµÄ»ù±¾±àÒëÄÜÁ¦,Î´ÊµÏÖºêºÍº¯ÊýµÈÏà¹Ø¹¦ÄÜ

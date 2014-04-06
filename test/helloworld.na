@@ -1,0 +1,72 @@
+.include head.na	//包含Mapper0的相关代码段定义
+
+.label PPUCTRL = $2000 //定义PPUCTRL标签来代替地址$2000，PPUCTRL是一个绝对地址(长地址,16bit)
+.label PPUMASK = $2001
+.label PPUSTATUS = $2002 // 用来读取PPU当前状态
+.label PPUSCROLL = $2005 // 设置背景卷轴的X/Y坐标
+.label PPUADDR = $2006 // 设置PPU中的VRAM地址
+.label PPUDATA = $2007 // 往当前VRAM地址中写入数据
+.label color = ++[$20][$10]@$00 //定义color标签，该标签为零页地址(短地址,8bit)
+
+.segment ROM	//选择当前代码段为主程序代码段，在head.inc中已经设置，此处可以不用，使用此条语句是为了安全起见
+text:	//设置文本数据的标签，你也可以使用繁琐方式设置：.label text
+.string "Hello FC World!!!"	//只有引号中的代码区分大小写，其他地方的不管
+
+_reset:	//程序入口
+	ldx #$FF // 重置栈顶指针到$FF, $打头的表示十六进制
+	txs
+	sei // 禁用IRQ中断
+	lda #$0
+	sta PPUCTRL // 关闭NMI(将PPUCTRL置零)
+	sta PPUMASK // 关闭PPU渲染(将PPUMASK置零)
+	jsr wait	//预热
+	jsr wait
+	
+	LDA #%1000 //背景显示，%打头的表示二进制数据
+	sta PPUMASK
+	
+	lda #0 //卷轴归位
+	sta PPUCTRL
+	sta PPUSCROLL
+	sta PPUSCROLL
+
+	LDA #$24	//设置文字位置,先写高位
+	STA PPUADDR
+	LDA #$e8	//再写低位
+	STA PPUADDR
+	
+	ldx #$0	//开始读入字符串
+loadtext:
+	lda text,X
+	inx
+	STA PPUDATA
+	cmp #$00	//字串以0结尾,不为零则继续写入
+	BNE loadtext
+
+	lda #%10000000	//允许NMI
+	sta PPUCTRL
+
+forever:	//死循环
+	jmp forever
+
+wait://等待VBlank
+	bit PPUSTATUS
+	bpl wait
+	rts	
+
+_nmi:	//nmi中断入口
+	inc color	//color的加一，待会儿从这个地方取颜色值，从而使颜色变化
+	lda #$3F //设置PPU地址为背景调色板$3F00
+	sta PPUADDR
+	lda #00
+	sta PPUADDR
+	lda #$0f // 设置背景色为黑色
+	sta PPUDATA
+	lda color // 随机设置3个前景色，起到闪烁的效果
+	sta PPUDATA
+	sta PPUDATA
+	sta PPUDATA
+	rti		//返回中断
+
+_irq:	//irq入口都一样
+	rti
